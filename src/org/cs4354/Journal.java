@@ -1,5 +1,5 @@
 package org.cs4354;
 
-public class Journal {
+public class Journal extends LibraryDocument {
 
 }

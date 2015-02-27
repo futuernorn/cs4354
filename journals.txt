@@ -1,0 +1,6 @@
+Tilte		 			PublisherDate		Volume 		Issue 	publisher
+EMERGING TRENDS	 			08-19-2014		10		11	IEEE Computer 
+COMMON FRAMEWORK 			09-20-2014		10		11	O'Reily 
+ADOPEL		 			10-12-2013		10		11	CACM 
+Foundations in Machine Learning		01-22-2014		11		12	IEEE Society
+Molecular Systems Biology		10-12-2009		10		11	Springer 
