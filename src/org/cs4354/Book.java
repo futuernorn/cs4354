@@ -1,16 +1,24 @@
 package org.cs4354;
 
-public class Book extends LibraryDocument {
+import java.util.Date;
 
-	public Book(String title, String publisher, String date) {
-		super(title, publisher, date);
-		// TODO Auto-generated constructor stub
-	}
+public class Book extends LibraryDocument {
+	String isbn;
+	Integer copies;
+	String author;
 
 
 	public Book(String title, String publisher, String date, String isbn, String copies, String author) {
-		// TODO Auto-generated constructor stub
-		super(title, publisher, date);
+		this.title = title;
+		this.publisher = publisher;
+		this.publishDate = new Date(date);
+		this.copies = new Integer(copies);
+		this.author = author;
+		
+		
+	}
+	public String toString() {
+		return title + "by " + author;// + " (" + copies + " total)";
 	}
 
 }

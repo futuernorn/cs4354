@@ -1,7 +1,7 @@
-Name			ID		NumberOfCopies
+Name	Password	ID	NumberOfCopies
 
-Muller robert 		1 		 0
-Alex scott 		2		 0
-Rievera Gonzalo 	3  		 0
-Walter Baumann 		4  		 0
-Joe smith 		5 		 0
+Muller robert	1234	1	0
+Alex scott	1235	2	0
+Rievera Gonzalo	1236	3	0
+Walter Baumann	1237	4	0
+Joe smith	1238	5	0
