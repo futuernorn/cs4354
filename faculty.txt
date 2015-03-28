@@ -1,8 +1,8 @@
-Name			ID		NumberOfCopies
+Name	Password	ID		NumberOfCopies
 
-Dave Stacey 		1		 6
-April Sales 		2		 3
-Gabri Loa 		3		 1
-Ging Henie 		4		 3
-Roy Flores 		5   		 4
-Elizabeth Harwell 	6		 5
+Dave Stacey	1234	1	6
+April Sales		1235	2	3
+Gabri Loa	1236 3	1
+Ging Henie	1237 4	3
+Roy Flores	1238	5	4
+Elizabeth Harwell	1239	6	5
