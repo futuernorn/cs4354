@@ -1,0 +1,1 @@
+public abstract class ConsoleUserInterface {  protected static LibSystem libs;  protected static Scanner sc = new Scanner(System.in);  /**  * Abstract method. To be implemented by subclasses. */  protected abstract void printMenu(); }}
