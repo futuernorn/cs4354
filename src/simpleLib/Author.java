@@ -1,4 +1,4 @@
-package org.cs4354;
+package simpleLib;
 
 public class Author {
 

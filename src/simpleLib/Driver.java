@@ -1,4 +1,4 @@
-package org.cs4354;
+package simpleLib;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -63,6 +63,10 @@ public class Driver {
 
 
 	
+	/**
+	 * @return Data loaded from data.ser serialized file
+	 * @throws IOException
+	 */
 	private static Database LoadSerialzedData() throws IOException {
 		Database loadedData = null;
 	       try

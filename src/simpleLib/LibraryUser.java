@@ -1,4 +1,4 @@
-package org.cs4354;
+package simpleLib;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package org.cs4354;
+package simpleLib;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -48,15 +48,15 @@ public class Database  implements java.io.Serializable {
 			}
 		}
 		
-
-//		for(Entry<Integer, String> entry : searchResults.entrySet()) {
 		return searchResults;
 		
 	}
 	
+	/**
+	 * Alternative method for loading from text if save / serialized data is not available.
+	 */
 	public void LoadDataFromText() {
 		String file ="books.txt";
-	    //reading   
 	    try{
 	        InputStream ips=new FileInputStream(file); 
 	        InputStreamReader ipsr=new InputStreamReader(ips);
@@ -64,30 +64,26 @@ public class Database  implements java.io.Serializable {
 	        String line;
 	        line=br.readLine(); // ignore header
 	        while ((line=br.readLine())!=null){
-//	        	System.out.println(line);
 	        	String dataValue[] = Arrays.copyOf(line.split("\t"),6);
 
 	        	String title = dataValue[0];
 	        	String publisher = dataValue[1];
 	        	String date = dataValue[2];
-//	        	System.out.println(date);
 	        	String isbn = dataValue[3];
 	        	String copies = dataValue[4];
 	        	String author = dataValue[5];
 	        	if (title.length() == 0)
 	        		continue;
 	        	books.add(new Book(title, publisher, date, isbn, copies, author));
-	        	//System.out.println(books.size());
 	        }
 	        br.close(); 
 
 	    }       
 	    catch (Exception e){
-//	        System.out.println(e.toString());
+	        System.out.println(e.toString());
 
 	    } 
 		file ="students.txt";
-	    //reading   
 	    try{
 	        InputStream ips=new FileInputStream(file); 
 	        InputStreamReader ipsr=new InputStreamReader(ips);
@@ -95,25 +91,47 @@ public class Database  implements java.io.Serializable {
 	        String line;
 	        line=br.readLine(); // ignore header
 	        while ((line=br.readLine())!=null){
-//	        	System.out.println(line);
 	        	String dataValue[] = Arrays.copyOf(line.split("\t"),4);
 
 	        	String username = dataValue[0];
 	        	String password = dataValue[1];
 	        	String id = dataValue[2];
-//	        	System.out.println(date);
 	        	String numberOfCopies = dataValue[3];
 	        	if (username.length() == 0)
 	        		continue;
 	        	users.add(new Student(username, password, id));
-	        	//System.out.println(books.size());
 	        }
 	        br.close(); 
 
 	    }       
 	    catch (Exception e){
-//	        System.out.println(e.toString());
+	        System.out.println(e.toString());
 
+	    } 
+	    
+		file ="faculty.txt";
+	    try{
+	        InputStream ips=new FileInputStream(file); 
+	        InputStreamReader ipsr=new InputStreamReader(ips);
+	        BufferedReader br=new BufferedReader(ipsr);
+	        String line;
+	        line=br.readLine(); // ignore header
+	        while ((line=br.readLine())!=null){
+	        	String dataValue[] = Arrays.copyOf(line.split("\t"),4);
+
+	        	String username = dataValue[0];
+	        	String password = dataValue[1];
+	        	String id = dataValue[2];
+	        	String numberOfCopies = dataValue[3];
+	        	if (username.length() == 0)
+	        		continue;
+	        	users.add(new Librarian(username, password, id));
+	        }
+	        br.close(); 
+
+	    }       
+	    catch (Exception e){
+	        System.out.println(e.toString());
 	    } 
 	
 	}
@@ -126,7 +144,7 @@ public class Database  implements java.io.Serializable {
 	public LibraryUser CheckLogin(String username, String password) {
 		
 		for (LibraryUser currentUser : users) {
-			System.out.println(String.format("checking %s : %s against %s : %s", currentUser.username.toLowerCase(), username.toLowerCase(), currentUser.password, password));
+//			System.out.println(String.format("checking %s : %s against %s : %s", currentUser.username.toLowerCase(), username.toLowerCase(), currentUser.password, password));
 			if (currentUser.username.equalsIgnoreCase(username) && currentUser.password.equals(password)) {
 				return currentUser;
 			}
@@ -154,5 +172,14 @@ public class Database  implements java.io.Serializable {
 			}
 		}
 		
+	}
+	public HashMap<Integer, LibraryDocument> GetAllLoanedItems() {
+		HashMap<Integer, LibraryDocument> results = new HashMap<Integer, LibraryDocument>();
+		int count = 1;
+		for(Loan loan : loans) {
+			results.put(Integer.valueOf(count), loan.document);
+			count++;	
+		}
+		return results;
 	}
 }

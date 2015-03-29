@@ -1,4 +1,4 @@
-package org.cs4354;
+package simpleLib;
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
@@ -13,6 +13,14 @@ import java.util.Map.Entry;
 
 
 
+/**
+ * @author jeffrey
+ *
+ */
+/**
+ * @author jeffrey
+ *
+ */
 public class Menu {
 	public enum MenuState {
 	    MAIN_MENU, ADMIN_MENU, USER_MENU
@@ -52,6 +60,9 @@ public class Menu {
 
 	}
 	
+	/**
+	 * Shows current menu options following a completed action.
+	 */
 	public void DisplayCurrentStateMenu() {
 		switch (currentState) {
 		case MAIN_MENU:
@@ -59,12 +70,19 @@ public class Menu {
 			break;
 		case ADMIN_MENU:
 			DisplayMenu("Admin Menu", adminMenuOptions);
+			break;
 		case USER_MENU:
 			DisplayMenu("User Menu (" + currentUser + ")", userMenuOptions);
 			break;
 		}
 	}
 	
+	
+	/**
+	 * @param input
+	 * @return
+	 * Runs the appropriate action following a menu item being selected.
+	 */
 	public boolean ParseInput(Integer input) {
 		switch (currentState) {
 		case MAIN_MENU:
@@ -82,6 +100,8 @@ public class Menu {
 				LibraryUser loginAdmin = LoginUser();
 				if (loginAdmin != null && loginAdmin instanceof Librarian) {
 					currentState = MenuState.ADMIN_MENU;
+				} else {
+					System.out.println("Login information not accepted.");
 				}
 				break;
 			case 3:				
@@ -102,6 +122,7 @@ public class Menu {
 				data.AddDocument(CreateDocument());
 				break;
 			case 3:
+				DisplayLoanedItems();
 				break;
 			case 4:
 				currentState = MenuState.MAIN_MENU;
@@ -143,14 +164,25 @@ public class Menu {
 	}
 	
 
+	/**
+	 * Shows the current user's loaned items, or all loaned items if the user is an administrator.
+	 */
 	private void DisplayLoanedItems() {
-		HashMap<Integer, LibraryDocument> results = data.GetLoanedItems(currentUser);
+		
+		HashMap<Integer, LibraryDocument> results = null;
+		if (currentUser instanceof Librarian)
+			data.GetAllLoanedItems();
+		else
+			data.GetLoanedItems(currentUser);
 		DisplayDocuments("Loaned items for " + currentUser + ":", results);	
 		System.out.println("Please press enter to continue...");
 		Scanner keyboard = new Scanner(System.in);
 		keyboard.nextLine();
 	}
 
+	/**
+	 * Removes a loaned item from the database's list of loans.
+	 */
 	private void ReturnItem() {
 		HashMap<Integer, LibraryDocument> results = data.GetLoanedItems(currentUser);
 		DisplayDocuments("Loaned items for " + currentUser + ":", results);	
@@ -158,6 +190,9 @@ public class Menu {
 		data.ReturnItem(currentUser, results.get(itemSelection));
 	}
 
+	/**
+	 * Adds a new loaned item for the current user.
+	 */
 	private void CheckoutItem() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
 		System.out.println("Please enter a title to checkout: ");
@@ -174,6 +209,10 @@ public class Menu {
 		data.CheckoutItem(currentUser, results.get(itemSelection));
 	}
 
+	
+	/**
+	 * Search all Journals and Books for a specific title. This function is also used to provide selection options for check-outs.
+	 */
 	private void DoSearch() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
 		System.out.println("Please enter a title to search: ");
@@ -228,11 +267,9 @@ public class Menu {
 	        System.out.println("Please enter your password: ");
 	        password = br.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
    
-//		System.out.println(username + " : " + password);
 		return data.CheckLogin(username, password);
 	
         
@@ -293,6 +330,10 @@ public class Menu {
 		return newUser;
 	}
 	
+	/**
+	 * @return
+	 * Used to add new Journals or Books to the Library's database.
+	 */
 	private LibraryDocument CreateDocument() {
 		LibraryDocument newDocument = null;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
@@ -377,6 +418,12 @@ public class Menu {
 		return newDocument;
 	}
 	
+	/**
+	 * @param prompt
+	 * @param acceptedValues
+	 * @return
+	 * General purpose user input requests.
+	 */
 	private int GetSelection(String prompt, Set<Integer> acceptedValues) { 
 		int userSelection = -1;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
