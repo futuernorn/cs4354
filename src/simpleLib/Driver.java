@@ -63,9 +63,13 @@ public class Driver {
 	}
 
 
+<<<<<<< HEAD:src/simpleLib/Driver.java
 
 
 
+=======
+	
+>>>>>>> assign02-turnin:src/simpleLib/Driver.java
 	/**
 	 * @return Data loaded from data.ser serialized file
 	 * @throws IOException

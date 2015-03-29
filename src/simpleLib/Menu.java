@@ -59,7 +59,11 @@ public class Menu {
 
 
 	}
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
+=======
+	
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 	/**
 	 * Shows current menu options following a completed action.
 	 */
@@ -76,8 +80,13 @@ public class Menu {
 			break;
 		}
 	}
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
 
+=======
+	
+	
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 	/**
 	 * @param input
 	 * @return
@@ -115,10 +124,30 @@ public class Menu {
 			break;
 		case ADMIN_MENU:
 			switch (input) {
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
 
 
 
+=======
+			case 1:
+				data.AddUser(CreateUser());
+				break;
+			case 2:
+				data.AddDocument(CreateDocument());
+				break;
+			case 3:
+				DisplayLoanedItems();
+				break;
+			case 4:
+				currentState = MenuState.MAIN_MENU;
+				break;
+			default:
+				System.out.println("Unknown option entered, please try again.");
+					
+				
+					
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 			}
 			break;
 		case USER_MENU:
@@ -150,18 +179,29 @@ public class Menu {
 
 	}
 
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
+=======
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 	/**
 	 * Shows the current user's loaned items, or all loaned items if the user is an administrator.
 	 */
 	private void DisplayLoanedItems() {
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
+=======
+		
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 		HashMap<Integer, LibraryDocument> results = null;
 		if (currentUser instanceof Librarian)
 			data.GetAllLoanedItems();
 		else
 			data.GetLoanedItems(currentUser);
+<<<<<<< HEAD:src/simpleLib/Menu.java
 		DisplayDocuments("Loaned items for " + currentUser + ":", results);
+=======
+		DisplayDocuments("Loaned items for " + currentUser + ":", results);	
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 		System.out.println("Please press enter to continue...");
 		Scanner keyboard = new Scanner(System.in);
 		keyboard.nextLine();
@@ -196,7 +236,11 @@ public class Menu {
 		data.CheckoutItem(currentUser, results.get(itemSelection));
 	}
 
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
+=======
+	
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 	/**
 	 * Search all Journals and Books for a specific title. This function is also used to provide selection options for check-outs.
 	 */
@@ -256,7 +300,11 @@ public class Menu {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
+=======
+   
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 		return data.CheckLogin(username, password);
 
 
@@ -316,7 +364,11 @@ public class Menu {
 		}
 		return newUser;
 	}
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
+=======
+	
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 	/**
 	 * @return
 	 * Used to add new Journals or Books to the Library's database.
@@ -404,14 +456,22 @@ public class Menu {
 		}
 		return newDocument;
 	}
+<<<<<<< HEAD:src/simpleLib/Menu.java
 
+=======
+	
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 	/**
 	 * @param prompt
 	 * @param acceptedValues
 	 * @return
 	 * General purpose user input requests.
 	 */
+<<<<<<< HEAD:src/simpleLib/Menu.java
 	private int GetSelection(String prompt, Set<Integer> acceptedValues) {
+=======
+	private int GetSelection(String prompt, Set<Integer> acceptedValues) { 
+>>>>>>> assign02-turnin:src/simpleLib/Menu.java
 		int userSelection = -1;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println(prompt);
