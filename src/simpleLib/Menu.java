@@ -41,25 +41,25 @@ public class Menu {
 		adminMenuOptions.put(new Integer(2), "Add Document");
 		adminMenuOptions.put(new Integer(3), "Display Loaned Items");
 		adminMenuOptions.put(new Integer(4), "Go Back");
-		
+
 		mainMenuOptions = new HashMap<Integer, String>();
 		mainMenuOptions.put(new Integer(1), "Login User");
 		mainMenuOptions.put(new Integer(2), "Login Administrator");
 		mainMenuOptions.put(new Integer(3), "Exit");
 		mainMenuOptions.put(new Integer(4), "Exit & Save");
-		
+
 		userMenuOptions = new HashMap<Integer, String>();
 		userMenuOptions.put(new Integer(1), "Search Documents");
 		userMenuOptions.put(new Integer(2), "Checkout Item");
 		userMenuOptions.put(new Integer(3), "Return Item");
 		userMenuOptions.put(new Integer(4), "Current Loans");
 		userMenuOptions.put(new Integer(5), "Exit");
-		
+
 		DisplayCurrentStateMenu();
-		
+
 
 	}
-	
+
 	/**
 	 * Shows current menu options following a completed action.
 	 */
@@ -76,8 +76,8 @@ public class Menu {
 			break;
 		}
 	}
-	
-	
+
+
 	/**
 	 * @param input
 	 * @return
@@ -104,34 +104,21 @@ public class Menu {
 					System.out.println("Login information not accepted.");
 				}
 				break;
-			case 3:				
+			case 3:
 				System.out.println("Exiting application...");
 				System.exit(0);
-			case 4:				
+			case 4:
 				return false;
 			default:
 				System.out.println("Unknown option entered, please try again.");
-			}		
+			}
 			break;
 		case ADMIN_MENU:
 			switch (input) {
-			case 1:
-				data.AddUser(CreateUser());
-				break;
-			case 2:
-				data.AddDocument(CreateDocument());
-				break;
-			case 3:
-				DisplayLoanedItems();
-				break;
-			case 4:
-				currentState = MenuState.MAIN_MENU;
-				break;
-			default:
-				System.out.println("Unknown option entered, please try again.");
-					
-				
-					
+
+
+
+
 			}
 			break;
 		case USER_MENU:
@@ -149,32 +136,32 @@ public class Menu {
 					DisplayLoanedItems();
 					break;
 				case 5:
-					currentState = MenuState.MAIN_MENU;					
+					currentState = MenuState.MAIN_MENU;
 					break;
 				default:
 					System.out.println("Unknown option entered, please try again.");
-					
+
 			}
-			
+
 			break;
 		}
 		DisplayCurrentStateMenu();
 		return true;
-		
+
 	}
-	
+
 
 	/**
 	 * Shows the current user's loaned items, or all loaned items if the user is an administrator.
 	 */
 	private void DisplayLoanedItems() {
-		
+
 		HashMap<Integer, LibraryDocument> results = null;
 		if (currentUser instanceof Librarian)
 			data.GetAllLoanedItems();
 		else
 			data.GetLoanedItems(currentUser);
-		DisplayDocuments("Loaned items for " + currentUser + ":", results);	
+		DisplayDocuments("Loaned items for " + currentUser + ":", results);
 		System.out.println("Please press enter to continue...");
 		Scanner keyboard = new Scanner(System.in);
 		keyboard.nextLine();
@@ -185,8 +172,8 @@ public class Menu {
 	 */
 	private void ReturnItem() {
 		HashMap<Integer, LibraryDocument> results = data.GetLoanedItems(currentUser);
-		DisplayDocuments("Loaned items for " + currentUser + ":", results);	
-		int itemSelection = GetSelection("Please enter selection to return: ", results.keySet());		
+		DisplayDocuments("Loaned items for " + currentUser + ":", results);
+		int itemSelection = GetSelection("Please enter selection to return: ", results.keySet());
 		data.ReturnItem(currentUser, results.get(itemSelection));
 	}
 
@@ -194,7 +181,7 @@ public class Menu {
 	 * Adds a new loaned item for the current user.
 	 */
 	private void CheckoutItem() {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Please enter a title to checkout: ");
 		String title = "";
 		try {
@@ -205,16 +192,16 @@ public class Menu {
 		}
 		Map<Integer, LibraryDocument> results = data.PerformSearch(title);
 		DisplayDocuments("Matching items:", results);
-		int itemSelection = GetSelection("Please enter selection: ", results.keySet());		
+		int itemSelection = GetSelection("Please enter selection: ", results.keySet());
 		data.CheckoutItem(currentUser, results.get(itemSelection));
 	}
 
-	
+
 	/**
 	 * Search all Journals and Books for a specific title. This function is also used to provide selection options for check-outs.
 	 */
 	private void DoSearch() {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Please enter a title to search: ");
 		String title = "";
 		try {
@@ -224,12 +211,12 @@ public class Menu {
 			e.printStackTrace();
 		}
 		Map<Integer, LibraryDocument> results = data.PerformSearch(title);
-		
+
 		DisplayDocuments("Search results for \"" + title + "\":", results);
 		System.out.println("Please press enter to continue...");
 		Scanner keyboard = new Scanner(System.in);
 		keyboard.nextLine();
-		
+
 	}
 
 	private void DisplayDocuments(String prompt, Map<Integer, LibraryDocument> items) {
@@ -238,7 +225,7 @@ public class Menu {
 			itemStrings.put(entry.getKey(), entry.getValue().toString());
 		}
 		DisplayMenu(prompt, itemStrings);
-		
+
 	}
 
 	public void DisplayMenu(String title, Map<Integer, String> options) {
@@ -249,19 +236,19 @@ public class Menu {
 		System.out.println("| Options:                     |");
 		for(Entry<Integer, String> entry : options.entrySet()){
 			System.out.println(String.format("| %-4s %-24s|", entry.getKey()+".", entry.getValue()));
-		    
+
 		}
 		if (options.size() < 1)
 			System.out.println(String.format("| %-29s|", "No options found."));
 		System.out.println("================================");
 	}
-	
+
 	private LibraryUser LoginUser() {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String username = "";
 		String password = "";
         System.out.println("Please enter your username: ");
-         
+
         try {
 			username = br.readLine();
 	        System.out.println("Please enter your password: ");
@@ -269,18 +256,18 @@ public class Menu {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-   
+
 		return data.CheckLogin(username, password);
-	
-        
-	
-	    	
+
+
+
+
 	}
-	
+
 	private LibraryUser CreateUser() {
 		LibraryUser newUser = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
-		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		String username = "";
 		String password = "";
 		try {
@@ -329,15 +316,15 @@ public class Menu {
 		}
 		return newUser;
 	}
-	
+
 	/**
 	 * @return
 	 * Used to add new Journals or Books to the Library's database.
 	 */
 	private LibraryDocument CreateDocument() {
 		LibraryDocument newDocument = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
-		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		String title = "";
 		String publisher = "";
 		String publishDate = "";
@@ -417,16 +404,16 @@ public class Menu {
 		}
 		return newDocument;
 	}
-	
+
 	/**
 	 * @param prompt
 	 * @param acceptedValues
 	 * @return
 	 * General purpose user input requests.
 	 */
-	private int GetSelection(String prompt, Set<Integer> acceptedValues) { 
+	private int GetSelection(String prompt, Set<Integer> acceptedValues) {
 		int userSelection = -1;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println(prompt);
 		String input = "-1";
 		while (!acceptedValues.contains(userSelection)) {

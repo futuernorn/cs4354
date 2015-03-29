@@ -14,21 +14,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Driver {
+	public enum MenuState {
+			MAIN_MENU, ADMIN_MENU, USER_MENU
+	}
 	private static ArrayList<Book> books;
 	private static Menu menu;
 	static Database data;
 	public static void main(String[] args) {
-		
-		
+
+
 		try {
 			data = LoadSerialzedData();
 		} catch (IOException e) {
 			System.err.println("Could not find seralized data to restore from or invalid data found. Loading data from text...");
 			data = new Database();
 			data.LoadDataFromText();
-		} 
+		}
 		menu = new Menu(data);
-		
+
 		// Read input with BufferedReader.
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
@@ -58,11 +61,11 @@ public class Driver {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 
-	
+
+
+
 	/**
 	 * @return Data loaded from data.ser serialized file
 	 * @throws IOException
@@ -76,15 +79,15 @@ public class Driver {
 	            loadedData = (Database) ois.readObject();
 	            ois.close();
 	            fis.close();
-	         
+
 	          }catch(ClassNotFoundException c){
 	             System.out.println("Class not found");
 	             c.printStackTrace();
 	          }
 	          return loadedData;
-	
+
 	}
-	private static void SerializeData() throws Exception {	
+	private static void SerializeData() throws Exception {
 
 	      try
 	      {
@@ -98,7 +101,7 @@ public class Driver {
 	      {
 	          i.printStackTrace();
 	      }
-	    
+
 	}
 
 }
