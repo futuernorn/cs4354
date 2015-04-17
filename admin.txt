@@ -1,5 +1,5 @@
 Name	Password	ID		NumberOfCopies
-Librarian	2345	1		2
+Admin	3456	1	2
 Dave Stacey	1234	2	6
 April Sales		1235	3	3
 Gabri Loa	1236 4	1
