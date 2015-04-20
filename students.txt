@@ -1,7 +1,0 @@
-Name	Password	ID	NumberOfCopies
-User	1234	1	0
-Muller robert	1234	2	0
-Alex scott	1235	3	0
-Rievera Gonzalo	1236	4	0
-Walter Baumann	1237	5	0
-Joe smith	1238	6	0

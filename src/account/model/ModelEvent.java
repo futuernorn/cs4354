@@ -2,10 +2,10 @@ package account.model;
 import java.awt.event.ActionEvent;
 
 public class ModelEvent extends ActionEvent {
-	private int amount;
-	public ModelEvent(Object obj, int id, String message, int amount){
+	private long amount;
+	public ModelEvent(Object obj, int id, String message, long amount){
 		super(obj, id, message);
 		this.amount = amount;
 	}
-	public int getAmount(){return amount;}
+	public long getAmount(){return amount;}
 }

@@ -1,6 +1,0 @@
-    name          | id     |   amount 
---------------------------------------
- Malapa  Bushra   | 123456 | $100        
- Peter   Benjamin | 078910 | $200.50 
- Goday   Priya    | 125671 | $0.50 
- John   Smith     | 444451 | $3000       

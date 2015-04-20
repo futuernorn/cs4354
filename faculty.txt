@@ -1,8 +1,0 @@
-Name	Password	ID		NumberOfCopies
-Librarian	2345	1		2
-Dave Stacey	1234	2	6
-April Sales		1235	3	3
-Gabri Loa	1236 4	1
-Ging Henie	1237 5	3
-Roy Flores	1238	6	4
-Elizabeth Harwell	1239	7	5
