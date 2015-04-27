@@ -1,4 +1,4 @@
-package account;
+package account.util;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
