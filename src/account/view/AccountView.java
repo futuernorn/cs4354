@@ -10,7 +10,9 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -33,6 +35,8 @@ public class AccountView extends JFrameView {
 	public static final String EDIT_IN_USD = "Edit in USD";
 	public static final String EDIT_IN_YUAN = "Edit in Yuan";
 	public static final String EDIT_IN_EUROS = "Edit in Euros";
+	
+
 	JComboBox accountList;
 	
 	private JButton editUSD;
@@ -48,7 +52,7 @@ public class AccountView extends JFrameView {
 		
 		lastUpdate = new Date();
 		lastUpdate = new Date(lastUpdate.getTime() - 1000);
-		accountList = new JComboBox(model.getAccounts().toArray());
+		accountList = new JComboBox(model.getAccounts().values().toArray());
 		
 		accountList.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
@@ -121,6 +125,38 @@ public class AccountView extends JFrameView {
 			((AccountController) getController()).accountViewOperations(e
 					.getActionCommand());
 		}
+	}
+	
+	class AlertDialog extends JDialog implements ActionListener {
+
+		  JButton button;
+
+		  public AlertDialog(String message) {
+		   JLabel alertMessage = new JLabel(message);
+			  button = new JButton("Close");
+		     button.addActionListener(this);
+		     add(alertMessage);
+		     add(button);
+		     pack();
+		     setVisible(true);
+		  }
+
+		  public void actionPerformed(ActionEvent e) {
+		      dispose();
+		  }
+	}
+
+	public void showWithdrawError(String message) {
+		Object[] options = new Object[]{"Dismiss"};
+		JOptionPane.showOptionDialog(this,
+				message,
+				"Withdraw Error",
+				JOptionPane.PLAIN_MESSAGE,
+				JOptionPane.WARNING_MESSAGE,
+				null,
+				options,
+				options[0]);
+		
 	}
 
 }

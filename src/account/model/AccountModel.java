@@ -30,26 +30,19 @@ public class AccountModel  {
 		// TODO Auto-generated method stub
 		return id;
 	}
+
+	public void depositAmount(double d) {
+		this.amount += d;
+
+		
+	}
+
+	public void withdrawAmount(double d) throws AccountFundsInsufficentException {
+		if (d > amount)
+			throw new AccountFundsInsufficentException(d, amount);
+		this.amount -= d;
+		
+	}
+
 	
-//	public void store(int value){
-//		amount = value;
-//		ModelEvent me = new ModelEvent(this, 1, "", amount);
-//		notifyChanged(me);
-//	}
-//	
-//	public void add(){state = "add"; total = current;}
-//	
-//	public void subtract(){state = "subtract"; total = current;}
-	
-//	public void equals(){
-//		if(state == "add"){
-//			total += current;
-//		}
-//		else {
-//			total -= current;
-//		}
-//		current = total;
-//		ModelEvent me = new ModelEvent(this, 1, "", total);
-//		notifyChanged(me);
-//	}
 }

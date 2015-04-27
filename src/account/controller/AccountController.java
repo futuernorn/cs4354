@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 
+import account.model.AccountFundsInsufficentException;
 import account.model.AccountList;
 import account.model.AccountModel;
 import account.view.AccountView;
@@ -22,6 +23,9 @@ public class AccountController extends AbstractController {
 
 	private String fileName;
 	private Date lastSaved;
+	
+	public final static double USD_TO_EUROS = 0.92;
+	public final static double USD_TO_YUAN = 6.23;
 
 	public AccountController(String fileName) {
 		lastSaved = new Date();
@@ -72,12 +76,12 @@ public class AccountController extends AbstractController {
 	private void saveData() {
 		PrintWriter writer;
 		try {
-			writer = new PrintWriter(fileName + "-test", "UTF-8");
+			writer = new PrintWriter(fileName, "UTF-8");
 
 			writer.println(String.format("|%-17s|%-8s|%-10s", "name", "id",
 					"amount"));
 			writer.println("--------------------------------------");
-			Iterator<AccountModel> iterator = ((AccountList) getModel()).getAccounts().iterator();
+			Iterator<AccountModel> iterator = ((AccountList) getModel()).getAccounts().values().iterator();
 			while (iterator.hasNext()) {
 				AccountModel account = iterator.next();
 				writer.println(String.format("|%-17s| %06d |$%-10.2f", account.getName(), account.getID(), account.getAmount()));
@@ -90,6 +94,7 @@ public class AccountController extends AbstractController {
 	}
 
 	public void accountViewOperations(String option) {
+		AccountList accountList = (AccountList) getModel();
 		if (option == AccountView.SAVE) {
 			saveData();
 		} else if (option == AccountView.EXIT) {
@@ -99,17 +104,39 @@ public class AccountController extends AbstractController {
 			}
 			System.exit(0);
 		} else if (option == AccountView.EDIT_IN_USD) {
-			new EditView((AccountList) getModel(), this, "USD");
+			AccountModel currentAccount = accountList.getCurrentAcount();
+			new EditView(accountList, this, "USD", currentAccount.getID(), currentAccount.getName(), currentAccount.getAmount());
 		} else if (option == AccountView.EDIT_IN_EUROS) {
-			new EditView((AccountList) getModel(), this, "EUROS");
+			
+			AccountModel currentAccount = accountList.getCurrentAcount();
+			new EditView(accountList, this, "EUROS", currentAccount.getID(), currentAccount.getName(), currentAccount.getAmount());
 		} else if (option == AccountView.EDIT_IN_YUAN) {
-			new EditView((AccountList) getModel(), this, "YUAN");
+			
+			AccountModel currentAccount = accountList.getCurrentAcount();
+			new EditView(accountList, this, "YUAN", currentAccount.getID(), currentAccount.getName(), currentAccount.getAmount());
 		} 
 
 	}
 	
-	public void editViewOperations(String option, int accountID, float amount) {
-		
+	public void editViewOperations(String option, int accountID, double d, EditView.CurrencyType currencyType) {
+		switch (currencyType) {
+			case YUAN:
+				d *= USD_TO_YUAN;
+				break;
+			case EUROS:
+				d *= USD_TO_EUROS;
+				break;
+		}
+		System.out.println("editViewOperations: " + d);
+		if (option == EditView.DEPOSIT) {
+			((AccountList) getModel()).depositFunds(accountID, d);
+		} else if (option == EditView.WITHDRAW) {
+			try {
+				((AccountList) getModel()).withdrawFunds(accountID, d);
+			} catch (AccountFundsInsufficentException e) {
+				((AccountView) getView()).showWithdrawError(String.format("Insufficient funds: amount to withdraw is %0.2f greater than available funds: %0.2f", e.getAdjustment(), e.getAmount()));
+			}
+		}
 	}
 	
 	public void updateAccountSelection(AccountModel newSelection) {
