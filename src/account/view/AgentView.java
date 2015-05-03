@@ -159,8 +159,11 @@ public class AgentView extends JFrameView {
 							options[0]);
 //					AgentStatusView view = new AgentStatusView()
 				} else {
+					
 					AgentStatusView view = new AgentStatusView(getModel(), getController(),
-							 "Deposit", agentID, accountID, amount, operations);
+							 operationType, agentID, accountID, amount, operations);
+					Thread b = new Thread(view);
+					b.run();
 //					System.out.println("currentAmount text: "
 //							+ currentAmount.getText());
 					System.out

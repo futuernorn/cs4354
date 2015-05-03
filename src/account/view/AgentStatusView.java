@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.swing.JButton;
@@ -24,7 +25,7 @@ import account.model.ModelEvent;
 import account.view.AgentView.Handler;
 import account.view.AgentView.OperationType;
 
-public class AgentStatusView extends JFrameView{
+public class AgentStatusView extends JFrameView  implements Runnable {
 
 	/**
 	 * 
@@ -54,12 +55,12 @@ public class AgentStatusView extends JFrameView{
 
 	private OperationType operationType;
 	public AgentStatusView(Model model, Controller controller,
-			String operationType, UUID agentID, int accountID, double adjustmentAmt,
+			AgentView.OperationType operationType, UUID agentID, int accountID, double adjustmentAmt,
 			double numOpertaions) {
 		super(model, controller);
 		this.accountID = accountID;
 		this.accountName = accountName;
-		this.operationType = OperationType.valueOf(operationType);
+		this.operationType = operationType;
 
 		Handler handler = new Handler();
 		
@@ -142,7 +143,7 @@ public class AgentStatusView extends JFrameView{
 		cp.add(controlPanel);
 
 		setSize(600, 350);
-		setTitle(String.format("%s agent $s for account %s", operationType, agentID, accountID));
+		setTitle(String.format("%s agent %s for account %s",  String.format("%s", operationType).toLowerCase(), agentID, accountID));
 		pack();
 		setVisible(true);
 	}
@@ -193,4 +194,18 @@ public class AgentStatusView extends JFrameView{
 		}
 	}
 
+	@Override
+	public void run() {
+        System.out.println("Timer task started at:"+new Date());
+        completeTask();
+        System.out.println("Timer task finished at:"+new Date());
+	}
+    private void completeTask() {
+        try {
+            //assuming it takes 20 secs to complete the task
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
