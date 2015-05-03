@@ -10,12 +10,16 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.UUID;
 
 import account.model.AccountFundsInsufficentException;
 import account.model.AccountList;
 import account.model.AccountModel;
 import account.view.AccountView;
+import account.view.AgentView;
 import account.view.EditView;
 import account.view.JFrameView;
 
@@ -26,6 +30,8 @@ public class AccountController extends AbstractController {
 	
 	public final static double USD_TO_EUROS = 0.92;
 	public final static double USD_TO_YUAN = 6.23;
+	
+	private Set<UUID> agentList;
 
 	public AccountController(String fileName) {
 		lastSaved = new Date();
@@ -35,6 +41,8 @@ public class AccountController extends AbstractController {
 
 		setView(new AccountView((AccountList) getModel(), this));
 		((JFrameView) getView()).setVisible(true);
+		
+		agentList = new HashSet<UUID>();
 
 	}
 
@@ -114,7 +122,17 @@ public class AccountController extends AbstractController {
 			
 			AccountModel currentAccount = accountList.getCurrentAcount();
 			new EditView(accountList, this, "YUAN", currentAccount.getID(), currentAccount.getName(), currentAccount.getAmount());
-		} 
+		} else if (option == AccountView.CREATE_DEPOSIT_AGENT) {
+			AccountModel currentAccount = accountList.getCurrentAcount();
+			UUID newID = UUID.randomUUID();
+			agentList.add(newID);
+			new AgentView(accountList, this, "DEPOSIT", newID, currentAccount.getID(), currentAccount.getName(), currentAccount.getAmount());
+		} else if (option == AccountView.CREATE_WIDTHDRAW_AGENT) {
+			AccountModel currentAccount = accountList.getCurrentAcount();
+			UUID newID = UUID.randomUUID();
+			agentList.add(newID);
+			new AgentView(accountList, this, "WITHDRAW", newID, currentAccount.getID(), currentAccount.getName(), currentAccount.getAmount());
+		}
 
 	}
 	

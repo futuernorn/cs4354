@@ -36,12 +36,17 @@ public class AccountView extends JFrameView {
 	public static final String EDIT_IN_YUAN = "Edit in Yuan";
 	public static final String EDIT_IN_EUROS = "Edit in Euros";
 	
+	public static final String CREATE_DEPOSIT_AGENT = "Create deposit agent";
+	public static final String CREATE_WIDTHDRAW_AGENT = "Create withdraw agent";
+	
 
 	JComboBox accountList;
 	
 	private JButton editUSD;
 	private JButton editEuros;
 	private JButton editYuan;
+	private JButton openDepositAgent;
+	private JButton openWithdrawAgent;
 	private JButton save;
 	private JButton exit;
 	
@@ -72,6 +77,11 @@ public class AccountView extends JFrameView {
 		editYuan = new JButton(EDIT_IN_EUROS);
 		editYuan.addActionListener(handler);
 
+		openDepositAgent = new JButton(CREATE_DEPOSIT_AGENT);
+		openDepositAgent.addActionListener(handler);
+		
+		openWithdrawAgent = new JButton(CREATE_WIDTHDRAW_AGENT);
+		openWithdrawAgent.addActionListener(handler);
 		
 		
 		save = new JButton(SAVE);
@@ -94,6 +104,11 @@ public class AccountView extends JFrameView {
 		editPanel.add(editEuros);
 		editPanel.add(editYuan);
 
+		JPanel agentPanel = new JPanel();
+		agentPanel.setLayout(new FlowLayout());
+		agentPanel.add(openDepositAgent);
+		agentPanel.add(openWithdrawAgent);
+		
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
 		controlPanel.add(save);
@@ -102,6 +117,7 @@ public class AccountView extends JFrameView {
 		cp.setLayout(new GridLayout(0, 1));
 		cp.add(comboPanel);
 		cp.add(editPanel);
+		cp.add(agentPanel);
 		cp.add(controlPanel);
 
 		setSize(500, 500);
